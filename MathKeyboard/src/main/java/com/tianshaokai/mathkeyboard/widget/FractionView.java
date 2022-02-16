@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.tianshaokai.mathkeyboard.R;
 import com.tianshaokai.mathkeyboard.manager.ConvertResult;

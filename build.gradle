@@ -1,31 +1,267 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/jcenter/' }
-        maven { url 'https://maven.aliyun.com/repository/google/'}
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google'}
         maven { url "http://www.jitpack.io" }
         google()
+        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
 allprojects {
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/jcenter/' }
-        maven { url 'https://maven.aliyun.com/repository/google/'}
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google'}
+        maven { url 'http://4thline.org/m2' }
         maven { url "http://www.jitpack.io" }
+        flatDir {
+            dirs '../commons/libs'
+            dirs '../pay/libs'
+            dirs '../push/libs'
+            dirs '../cooperationbusiness/libs'
+            dirs '../polyv-commonui/libs'
+            dirs '../scanner/libs'
+        }
+        maven { url 'http://mvn.mob.com/android' }
         google()
+        //mavenCentral 源
+        mavenCentral()
+//        maven { url 'https://dl.bintray.com/polyv/android' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/releases/' }
+        maven {
+            url "https://storage.flutter-io.cn/download.flutter.io"
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    minSdkVersion = 21
+
+    targetSdkVersion = 27
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.2'
+    sourceCompatibilityVersion = JavaVersion.VERSION_1_8
+    targetCompatibilityVersion = JavaVersion.VERSION_1_8
+
+
+    // 依赖的jar/aar版本定义
+//    final PLAY_SERVICES_VERSION = '8.4.0'
+    final SUPPORT_LIBRARY_VERSION = '1.0.0'
+    final RETROFIT_VERSION = '2.9.0'
+    final DAGGER_VERSION = '2.30.1'
+    final DEXMAKER_VERSION = '1.4'
+    final ESPRESSO_VERSION = '3.0.2'
+    final RUNNER_VERSION = '1.0.2'
+    final RXJAVA_VERSION = '1.3.8'
+    final RXJAVAANDROID_VERSION = '1.2.1'
+    final RXBINDING_VERSION = '1.0.1'
+    final RXLIFECYCLE_VERSION = '1.0'
+    final SHARESDK_VERSION = '3.8.7'
+    final BUTTERKNIFE_VERSION = '10.2.3'
+    final QMUI_VERSION = '2.0.0-alpha11'
+
+
+    // 用这个插件查询版本号，真的很方便 https://github.com/wuyr/GoogleLibraryVersionQuerier
+    deps = [
+//            playServicesGcm : "com.google.android.gms:play-services-gcm:$PLAY_SERVICES_VERSION",
+//SDK
+appcompatV7: "androidx.appcompat:appcompat:$SUPPORT_LIBRARY_VERSION",
+gridLayoutV7: "com.android.support:gridlayout-v7:$SUPPORT_LIBRARY_VERSION",
+supportV4: "androidx.legacy:legacy-support-v4:$SUPPORT_LIBRARY_VERSION",
+recyclerviewV7: "androidx.recyclerview:recyclerview:$SUPPORT_LIBRARY_VERSION",
+cardviewV7: "androidx.cardview:cardview:$SUPPORT_LIBRARY_VERSION",
+supportAnnotations: "androidx.annotation:annotation:$SUPPORT_LIBRARY_VERSION",
+design: "com.google.android.material:material:$SUPPORT_LIBRARY_VERSION",
+percentlayout: "androidx.percentlayout:percentlayout:$SUPPORT_LIBRARY_VERSION",
+espressoContrib: "com.android.support.test.espresso:espresso-contrib:$ESPRESSO_VERSION",
+espressoCore: "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION",
+runner: "com.android.support.test:runner:$RUNNER_VERSION",
+rules: "com.android.support.test:rules:$RUNNER_VERSION",
+multidex: 'androidx.multidex:multidex:2.0.1',
+constraintLayout: 'androidx.constraintlayout:constraintlayout:1.1.3',
+
+//jcenter 这里只放jcenter的项目，放对地方，方便管理，别乱放
+picasso: 'com.squareup.picasso:picasso:2.71828',
+sqlbrite: 'com.squareup.sqlbrite:sqlbrite:1.1.2',
+retrofit: "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION",
+converterGson: "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION",
+adapterRxjava: "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION",
+otto: 'com.squareup:otto:1.3.8',
+okhttp:'com.squareup.okhttp3:okhttp:4.9.0',
+bmphotoview: 'com.bm.photoview:library:2.0.7',
+eventbus: 'org.greenrobot:eventbus:3.2.0',
+
+htmlParser: 'org.htmlparser:htmlparser:2.1',
+
+rxbinding: "com.jakewharton.rxbinding:rxbinding:$RXBINDING_VERSION",
+rxbindingV7: "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$RXBINDING_VERSION",
+rxbindingV4: "com.jakewharton.rxbinding:rxbinding-support-v4:$RXBINDING_VERSION",
+rxbindingRecyclerview: "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$RXBINDING_VERSION",
+butterknife: "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION",
+butterknifeCompiler: "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION",
+//            timber: 'com.jakewharton.timber:timber:2.4.2',
+diskLruCache: 'com.jakewharton:disklrucache:2.0.2',
+
+rxlifecycle: "com.trello:rxlifecycle:$RXLIFECYCLE_VERSION",
+rxlifecycleComponents: "com.trello:rxlifecycle-components:$RXLIFECYCLE_VERSION",
+rxlifecycleAndroid: "com.trello:rxlifecycle-android:$RXLIFECYCLE_VERSION",
+
+daggerCompiler: "com.google.dagger:dagger-compiler:$DAGGER_VERSION",
+dagger:  "com.google.dagger:dagger:$DAGGER_VERSION",
+gson: 'com.google.code.gson:gson:2.8.6',
+zxing: 'com.google.zxing:core:3.4.1',
+guava: 'com.google.guava:guava:30.0-android',
+
+dexmaker: "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION",
+dexmakerDx: "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION",
+dexmakerMockito: "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION",
+
+arouterApi: 'com.alibaba:arouter-api:1.5.1',
+arouterCompiler: 'com.alibaba:arouter-compiler:1.5.1',
+arouterRegister: 'com.alibaba:arouter-register:1.0.2',
+
+flycoTabLayout: 'com.flyco.tablayout:FlycoTabLayout_Lib:2.2.0@aar',
+connectionclass: 'com.facebook.network.connectionclass:connectionclass:1.0.1',
+imageloader: 'com.nostra13.universalimageloader:universal-image-loader:1.9.5',
+swipe:'com.daimajia.swipelayout:library:1.2.0@aar',
+progresshud: 'com.kaopiz:kprogresshud:1.2.0',
+datepicker:'com.bigkoo:pickerview:2.1.1',
+gestureView: 'com.takwolf.android:lock9view:0.1.3',
+commonPullToRefresh: 'com.chanven.lib:cptr:1.1.0',
+smartRefresh: 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.3',
+systembartint: 'com.readystatesoftware.systembartint:systembartint:1.0.4',
+commonsValidator: 'commons-validator:commons-validator:1.7',
+marqueeview:'com.sunfusheng:MarqueeView:1.4.1',
+pdfView: 'com.joanzapata.pdfview:android-pdfview:1.1.0@aar',
+floatMenu: 'com.noober.floatmenu:common:1.0.4',
+
+okDownload: 'com.liulishuo.okdownload:okdownload:1.0.7',
+okDownload_sqlite: 'com.liulishuo.okdownload:sqlite:1.0.7',
+okDownload_okhttp: 'com.liulishuo.okdownload:okhttp:1.0.7',
+
+MobCommons: 'com.mob:MobCommonsFP:2021.0526.2001',
+MobGUI: 'com.mob:MobGUI:2019.0306.1850',
+MobTools: 'com.mob:MobToolsFP:2021.0526.2004',
+MobApm: 'com.mob:MobApm:1.3.2@aar',
+ShareSDK: "cn.sharesdk:ShareSDK:$SHARESDK_VERSION@aar",
+ShareSDKQQ: "cn.sharesdk:ShareSDK-QQ:$SHARESDK_VERSION",
+ShareSDKQZone: "cn.sharesdk:ShareSDK-QZone:$SHARESDK_VERSION",
+ShareSDKWechat: "cn.sharesdk:ShareSDK-Wechat:$SHARESDK_VERSION",
+ShareSDKWechatCore: "cn.sharesdk:ShareSDK-Wechat-Core:$SHARESDK_VERSION",
+ShareSDKWechatFavorite: "cn.sharesdk:ShareSDK-Wechat-Favorite:$SHARESDK_VERSION",
+ShareSDKWechatMoments: "cn.sharesdk:ShareSDK-Wechat-Moments:$SHARESDK_VERSION",
+ShareSDKDingding: "cn.sharesdk:ShareSDK-Dingding:$SHARESDK_VERSION",
+
+wechatSDK: 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.5.2',
+buglyUpdate: 'com.tencent.bugly:crashreport_upgrade:1.5.23',
+buglyCrashReport: 'com.tencent.bugly:nativecrashreport:3.9.0',
+buglyTinker : 'com.tencent.tinker:tinker-android-lib:1.9.14.17',
+tinkerPatchGradlePlugin:'com.tencent.tinker:tinker-patch-gradle-plugin:1.9.14.17',
+tinkerAnno:'com.tencent.tinker:tinker-android-anno:1.9.14.17',
+tinkerAnnoSupport:'com.tencent.tinker:tinker-android-anno-support:1.9.14.17',
+qmui:"com.qmuiteam:qmui:$QMUI_VERSION",
+qmuiArch:"com.qmuiteam:arch:$QMUI_VERSION",
+qmuiArchCompiler:"com.qmuiteam:arch-compiler:$QMUI_VERSION",
+tbs:'com.tencent.tbs.tbssdk:sdk:43993',
+
+videocache:'com.danikula:videocache:2.7.1',
+
+sqlcipher:'net.zetetic:android-database-sqlcipher:4.4.2@aar',
+keyboardlistener:'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.3.0',
+
+rxpermissions: 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4',
+
+httputils: 'com.zhy:okhttputils:2.6.2',
+emojiJava:'com.vdurmont:emoji-java:5.1.1',
+
+mockito: "org.mockito:mockito-core:3.6.28",
+robolectric: 'org.robolectric:robolectric:4.4',
+javaxAnnotation: 'org.glassfish:javax.annotation:3.1.1',
+
+//动态申请权限库
+permissionsdispatcher: 'org.permissionsdispatcher:permissionsdispatcher:4.8.0',
+permissionsdispatcherProcessor: 'org.permissionsdispatcher:permissionsdispatcher-processor:4.8.0',
+
+rxandroid: "io.reactivex:rxandroid:$RXJAVAANDROID_VERSION",
+rxjava: "io.reactivex:rxjava:$RXJAVA_VERSION",
+
+clansFab: 'com.github.clans:fab:1.6.4',
+
+circleImageView: 'de.hdodenhof:circleimageview:3.1.0',
+parallaxviewpager: 'cn.yangbingqiang.android:parallaxviewpager:1.0.1',
+
+junit: "junit:junit:4.13.1",
+commonsCodec: 'commons-codec:commons-codec:1.15',
+
+fragmentation: "me.yokeyword:fragmentationx:1.0.2",
+fragmentation_core: "me.yokeyword:fragmentationx-core:1.0.2",
+
+progressmanager: 'me.jessyan:progressmanager:1.5.0',
+
+fresco: 'com.facebook.fresco:fresco:2.3.0',
+commons_lang3: 'org.apache.commons:commons-lang3:3.11',
+fastjson: 'com.alibaba:fastjson:1.2.75',
+slf4j_api: 'org.slf4j:slf4j-api:1.7.30',
+
+//阿里云 视频
+//短视频基础版SDK必须依赖
+aliyunsvideosnap: 'com.aliyun.video.android:svideosnap:3.21.0',
+//核心库必须依赖
+aliyunsvideocore: 'com.aliyun.video.android:core:1.2.2',
+//核心库必须依赖
+aliyunsvideoAlivcConan: 'com.alivc.conan:AlivcConan:1.0.5',
+//必须依赖
+aliyunAlivcFFmpeg: 'com.aliyun.video.android:AlivcFFmpeg:2.0.0',
+//aliyunAlivcFFmpeg: 'com.aliyun.video.android:AlivcSvideoFFmpeg:1.0.2',
+// 上传库,如不需要上传可不依赖
+//implementation: 'com.aliyun.video.android:upload:1.6.0'
+
+//阿里云 播放器
+//如果集成播放器的同时，也集成短视频SDK，那么播放器的sdk依赖AliyunPlayer-x.x.x-part包，
+// 同时使用共通的ffmpeg版本，即需要额外依赖com.aliyun.video.android:AlivcFFmpeg:x.x.x这个包
+aliyunexternalPlayerPart: 'com.aliyun.sdk.android:AliyunPlayer:5.4.0-part',
+aliyunexternalPlayerFull: 'com.aliyun.sdk.android:AliyunPlayer:5.4.0-full',
+
+aliyunOSS: 'com.aliyun.dpa:oss-android-sdk:+',
+
+//https://jitpack.io github-project 这里只放github的项目，jcenter里没有，通过jitpack引用的项目，放对地方，方便管理，别乱放
+jsbridge: 'com.github.lzyzsd:jsbridge:1.0.4',
+photoview: 'com.github.chrisbanes:PhotoView:2.3.0',
+spinkit: 'com.github.ybq:Android-SpinKit:1.4.0',
+recyclerViewAdapterHelper: 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6',
+magicIndicator: 'com.github.hackware1993:MagicIndicator:1.7.0',
+pandoraNoOp :'com.github.whataa:pandora-no-op:v2.0.3',
+typeBuilder: 'com.github.ikidou:TypeBuilder:1.0',
+customPopWindow: 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1',
+
+cockroach:'com.github.Xiaoxintong:Cockroach:2.0.0.1',
+zlwAudioRecorder: 'com.github.Xiaoxintong:ZlwAudioRecorder:1.0.7.3',
+PersistentCookie: 'com.github.Xiaoxintong:PersistentCookie:1.0.2',
+pandora:'com.github.Xiaoxintong:pandora:v2.1.0.2',
+xxtjsbridge:'com.github.Xiaoxintong:jsbridge:1.0.1',
+imageedit:'com.github.Xiaoxintong:imageedit:1.0.1',
+ijkplayer:'com.github.Xiaoxintong:jjdxm-ijkplayer:1.0.2',
+
+guideview:'com.github.huburt-Hu:NewbieGuide:v2.4.4',
+glide: 'com.github.bumptech.glide:glide:4.11.0',
+glideCompiler: 'com.github.bumptech.glide:compiler:4.11.0',
+FFmpegMediaMetadataRetrieverCore: 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.15',
+FFmpegMediaMetadataRetrieverNative: 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.15',
+HotfixFlutter: 'com.sk.flutterpatch:flutterpatch:0.0.7'
+    ]
+
 }

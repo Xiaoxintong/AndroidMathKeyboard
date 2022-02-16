@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.tianshaokai.mathkeyboard.manager.ConvertResult;
 import com.tianshaokai.mathkeyboard.manager.Parser;

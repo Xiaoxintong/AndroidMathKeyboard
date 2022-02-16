@@ -1,7 +1,7 @@
 package com.tianshaokai.mathkeyboard.widget;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatTextView;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.tianshaokai.mathkeyboard.manager.ConvertResult;
 import com.tianshaokai.mathkeyboard.manager.LatexConstant;

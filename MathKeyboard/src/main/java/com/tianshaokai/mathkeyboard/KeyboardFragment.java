@@ -13,8 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 import com.tianshaokai.mathkeyboard.manager.Assembles;
 import com.tianshaokai.mathkeyboard.manager.ConvertResult;

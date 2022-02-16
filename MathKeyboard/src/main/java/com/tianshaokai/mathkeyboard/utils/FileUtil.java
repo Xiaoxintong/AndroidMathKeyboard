@@ -12,7 +12,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
